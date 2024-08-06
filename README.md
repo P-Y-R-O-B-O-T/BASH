@@ -71,7 +71,7 @@
 > When we need to run multiple scripts in sequence, what will happen if one fails, others will fail too, so we must export a success status variable from the script that an be used by the next script to make decisions based on previous script's completion or success status
 
 > [!TIP]
-> Use `\[\[ CONDITION \]\]` in conditional statements because it offers wider range of conditional expressions
+> Use `[[ CONDITION ]]` in conditional statements because it offers wider range of conditional expressions
 
 * `seq` can be used in for loops as it generates a sequence of numbers
 ```
