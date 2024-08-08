@@ -261,6 +261,17 @@ function_name() {
 > * To get string of all arguments passed to function as a single object, use `$*` inside the function
 > * Define local variables inside function `local VAR=VAL`
 
+> [!TIP]
+> We can also return values from functions.
+> The value we echo is returned
+> ```
+> function_name() {
+>   echo "HUHU"
+> }
+
+returned_value=$(function_name)
+```
+
 ## EXIT CODES
 * Every command have a exit code that it returns
 
