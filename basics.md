@@ -193,7 +193,7 @@ done
 EXAMPLES
 ```bash
 FILE_PATH="/home/slenderman/Documents/KUSHAL_RESUME.pdf"
-while [[ !-f ${FILE_PATH} ]]; do
+while [[ ! -f ${FILE_PATH} ]]; do
   STATEMENTS
 done
 ```
