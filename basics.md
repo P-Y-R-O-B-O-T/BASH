@@ -199,7 +199,7 @@ done
 ```
 
 > [!IMPORTANT]
-> #### BREAK and CONTINUE
+> ### BREAK and CONTINUE
 > `break` keyword is for breaking a loop.
 > `continue` keyword is to skip statements and goto next iteration of the loop
 
