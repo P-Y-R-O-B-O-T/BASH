@@ -8,6 +8,7 @@
 * Case sensitive
 * `VAR=VAL`, `VAL` can be integer, string, array, associative array
 * Define read only variables `readonly VAR=VAL`
+
 EXAMPLES
 ```bash
 #!/bin/bash
