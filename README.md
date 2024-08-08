@@ -468,8 +468,8 @@ VAR+=(VAL1 VAL2 VAL3 ...)
 ```
 
 > [!TIP]
-> See sorting an array
-> We can have nested arrays
+> - See sorting an array
+> - We can have nested arrays
 
 ### ASSOCIATIVE ARRAY
 * Works like hashmap
