@@ -409,7 +409,7 @@ cat ${SCRIPT_PATH}
 > See `typeset`
 
 > [!TIP]
-> A string can be treated as numbers
+> A string can be treated as numbers.
 > This is done using dynamically typed syntax which allows us to reassign different type of values to a single variable
 > ```
 > VAR="NUMBER"
