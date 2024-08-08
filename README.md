@@ -500,6 +500,7 @@ done
 ```
 
 ## GOOD PRACTICES
+* Always start scripts with shebang `#!`
 ### STRICT MODE
 * Even after occurence or error, bash script keeps running, this should not happen in some cases
 * We will set flags to handle these abnormal events, these flags are set just below the shebang in general
