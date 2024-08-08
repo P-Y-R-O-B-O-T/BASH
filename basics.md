@@ -223,6 +223,7 @@ case ${VARIABLE} in
     ;;
 esac
 ```
+
 > [!TIP]
 > Find files matching different patterns
 > ```bash
