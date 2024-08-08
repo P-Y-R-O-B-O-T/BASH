@@ -225,22 +225,22 @@ esac
 ```
 > [!TIP]
 > Find files matching different patterns
-```bash
-DIRECTORY_PATH="~/Downloads/"
-DUMP_PATH="~/DUMP"
-for file in $(ls ${DIRECTORY_PATH}); do
-  case ${file} in
-    *.*.*)
-      mv ${DIRECTORY_PATH}${file} ${DUMP_PATH}${file}
-      ;;
-    *.pdf)
-      mv ${DIRECTORY_PATH}${file} ~/Documents/${file}
-      ;;
-    *)
-      echo "Unable to decide action for ${file}"
-  esac
-done
-```
+> ```bash
+> DIRECTORY_PATH="~/Downloads/"
+> DUMP_PATH="~/DUMP"
+> for file in $(ls ${DIRECTORY_PATH}); do
+>   case ${file} in
+>     *.*.*)
+>       mv ${DIRECTORY_PATH}${file} ${DUMP_PATH}${file}
+>       ;;
+>     *.pdf)
+>       mv ${DIRECTORY_PATH}${file} ~/Documents/${file}
+>       ;;
+>     *)
+>       echo "Unable to decide action for ${file}"
+>   esac
+> done
+> ```
 
 ## EXIT CODES
 * Every command have a exit code that it returns
