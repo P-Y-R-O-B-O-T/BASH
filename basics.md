@@ -253,13 +253,13 @@ function_name() {
   STATEMENTS
 }
 ```
+
 > [!TIP]
 > * To access arguments accessed to function, use `${N}` inside the function
 > * To get number of arguments passed to function, use `$#` inside the function
 > * To get array of all arguments passed to function, use `$@` inside function
 > * To get string of all arguments passed to function as a single object, use `$*` inside the function
 > * Define local variables inside function `local VAR=VAL`
-
 
 ## EXIT CODES
 * Every command have a exit code that it returns
