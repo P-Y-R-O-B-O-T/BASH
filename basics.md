@@ -152,6 +152,7 @@ for ELEMENT in ITERABLE; do
   STATEMENTS
 done
 ```
+
 EXAMPLES
 ```bash
 for mission_id in 1 2 3 4 5 6; do
@@ -192,6 +193,7 @@ while [[ CONDITION ]]; do
   STATEMENTS
 done
 ```
+
 EXAMPLES
 ```bash
 FILE_PATH="/home/slenderman/Documents/KUSHAL_RESUME.pdf"
