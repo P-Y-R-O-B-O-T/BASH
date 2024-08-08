@@ -268,9 +268,9 @@ function_name() {
 > function_name() {
 >   echo "HUHU"
 > }
-
-returned_value=$(function_name)
-```
+>
+> returned_value=$(function_name)
+> ```
 
 ## EXIT CODES
 * Every command have a exit code that it returns
