@@ -279,22 +279,25 @@ function_name() {
 > Always terminate a script with `exit 0` as last statement
 
 * `0` means that there was no error, any other value than `0` means error
-```bash
-ERR_ENCOUNTERED=0
 
-clean_up_mess() {
-  # ADD STATE MENTS TO REVERT THE MESS CREATED BY RUNNING THIS SCRIPT IF FAIL TO COMPLETE NORMALLY
-}
-
-terminate() {
-  clean_up_mess
-  echo "$1" >&2
-  exit ${2}
-}
-
-if [[ ERR_ENCOUNTERED = 0 ]]; then
-  terminate "Error occured" 1
-fi
-
-exit 0
+> [!TIP]
+> Cleanup and exit with non zero return code
+> ```bash
+> ERR_ENCOUNTERED=0
+>
+> clean_up_mess() {
+>   # ADD STATE MENTS TO REVERT THE MESS CREATED BY RUNNING THIS SCRIPT IF FAIL TO COMPLETE NORMALLY
+> }
+>
+> terminate() {
+>   clean_up_mess
+>   echo "$1" >&2
+>   exit ${2}
+> }
+>
+> if [[ ERR_ENCOUNTERED = 0 ]]; then
+>   terminate "Error occured" 1
+> fi
+>
+> exit 0
 ```
