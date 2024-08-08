@@ -392,7 +392,7 @@ cat ${SCRIPT_PATH}
 ```
 
 > [!IMPORTANT]
-> * See `IFS` environment variable, changing it for specific purposes is possible and set it like `IFS=",.:"` or something else inside the script, its default value is ` \t\n`
+> * See `IFS` environment variable, it is used for default seperators for and values inside the script and interactive shell too, changing it for specific purposes is possible and set it like `IFS=",.:"` or something else inside the script, its default value is ` \t\n`
 > * `set -- ${VAR}` var is a string of elements seperated by elements and this command assigns the elemets to command line argument variables and then we can access them in the way `echo $1 $2 $3`
 
 ## ARRAYS
