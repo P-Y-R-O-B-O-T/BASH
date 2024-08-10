@@ -122,6 +122,11 @@ else
   STATEMENTS
 fi
 ```
+
+> [!TIP]
+> ### GUARD CLAUSE
+> Avoid nesting of `if` statements
+
 ### STRING OPERATORS
 | EXPRESSION | EFFECT |
 | ---------- | ------ |
@@ -470,6 +475,27 @@ touch huhu{1..10..2} # WITH STEPS
 > shift
 > echo ${1}
 > ```
+
+## PID
+* Script runs as a process and launches child processes when it runs the statemets
+* `strace -Tfp PID` see all system calls made by the process
+* `pgrep -o bash` to get PID of current bash session
+* `$$` holds PID of parent shell
+
+## BUILT-IN COMMAND
+* Builtin commands do not generate new PIDs
+* Use `type COMMAND` to see its type
+* Use `time COMMAND` to see time taken by the command to execute
+* `/bin/COMMAND` takes less time to execute than `/usr/bin/COMMAND`
+* `time` is not a command but a keyword
+* `compgen -b` to see builtin commands
+* `compgen -k` to see keywords
+
+## BUILT-IN vs KEYWORDS
+* Builtin never generate seperate PID, keywords are special words to control flow of execution
+* `[ ]` or `test` in conditionals are builtin and `[[ ]]` are keywords, see `man [` or `man test`
+* `[[ ]]` are not posix compliant and do not have backward compatibility
+
 
 ## EXIT CODES
 * Every command have a exit code that it returns
