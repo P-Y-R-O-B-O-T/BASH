@@ -92,7 +92,7 @@ echo "${VAR#* % *}"
 ```
 
 ### GLOBS
-* Used in variables and commands too
+* Used in variables with expantion and it can be used in commands too
 * `*`, `?`, `\`, `[` and `]` can be used to build regex in parameter expansion
     - `?` matches any single character in the string
     - `*` matches string of 0 or more number of characters of any type, wildcard usage
@@ -152,7 +152,7 @@ EXAMPLES
 # MAKE FILES THAT HAVE a, b, c, d AT END AND "abc" AT STARTING
 touch abc{a..d}
 
-OTHER EXAMPLES
+#OTHER EXAMPLES
 touch huhu{qwe,asd,zxc}{001..004}
 touch huhu{1..10..2} # WITH STEPS
 ```
