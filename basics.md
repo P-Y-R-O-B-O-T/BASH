@@ -286,7 +286,8 @@ function_name() {
 > * To get string of all arguments passed to function as a single object, use `$*` inside the function
 > * Define local variables inside function `local VAR=VAL`
 
-> [!TIP]
+> [!IMPORTANT]
+> ### RETURN VALUE
 > We can also return values from functions.
 > The value we echo is returned
 > ```
