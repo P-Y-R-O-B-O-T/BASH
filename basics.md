@@ -482,6 +482,11 @@ touch huhu{1..10..2} # WITH STEPS
 * `pgrep -o bash` to get PID of current bash session
 * `$$` holds PID of parent shell
 
+### SHEBANG
+* Tells which program to use for executing itself, if not specified, it uses the parent shell's program
+* See the shell `echo $SHELL`
+* `#!/bin/bash`
+
 ## BUILT-IN COMMAND
 * Builtin commands do not generate new PIDs
 * Use `type COMMAND` to see its type
