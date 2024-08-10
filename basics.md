@@ -265,6 +265,7 @@ esac
 
 ## FUNCTIONS
 * Reusable pieces of programs
+> [!TIP]
 > ### CONVENTIONS
 > * Always written in lower case and use underscore as word seperator
 > * We use parenthesis without space as soon as function name ends, then a space then open a curly brace to define function body
