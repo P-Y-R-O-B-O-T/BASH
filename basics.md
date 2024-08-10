@@ -772,3 +772,34 @@ for key in "${!VAR[@]}"; do
 done
 ```
 
+## GOOD PRACTICES
+* Always start scripts with shebang `#!`
+
+### STRICT MODE
+* Even after occurence or error, bash script keeps running, this should not happen in some cases
+* We will set flags to handle these abnormal events, these flags are set just below the shebang in general
+    - `set -e` exit on error, as soon as script encounters error, see status using `echo $?` after the script exits, there are many reserved exit codes, see bash documentation for exit codes, can also be used in interactive shell, but the shell will exit as soon as a wrong command is entered
+    - `set -u` exit if unset variable is used, it also exits with a error code
+    - `set -o pipefail` catches error in piped commands which are used in the scripts, but always exits with status 0, thats why there is need to use the use the `OR` Command chanining
+* Initial way to handle errors in small scripts, but this do not scale well for large scripts
+```
+ehco "HUHU" || {echo "Failed, error encountered"; exit 1}
+```
+
+### NO OP COMMAND
+* Testing is important, where only logic is checked but no changes are made
+* This is done by dry run
+* Instead of using a empty echo command use a colon `:` to test the code for logical errors and syntactical errors
+* Always keep in mind: interpreter error vs runtime error
+
+> [!TIP]
+> Always docs and comments just below the shebang and it must have small description, usage, error codes and author name
+
+## LOGGING
+* Crucial when working on new or complex things
+* Better to use the `ISO 8601` format which is `YYYY-MM-DDTHH:MM:SS:SSSZ`
+```bash
+log() {
+  echo $(date -u +"%y-%m-%d_%H:%M:%S~") "${@}"
+}
+```

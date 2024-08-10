@@ -389,7 +389,6 @@ cat ${SCRIPT_PATH}
 > * See `IFS` environment variable, it is used for default seperators for and values inside the script and interactive shell too, changing it for specific purposes is possible and set it like `IFS=",.:"` or something else inside the script, its default value is ` \t\n`
 > * `set -- ${VAR}` var is a string of elements seperated by elements and this command assigns the elemets to command line argument variables and then we can access them in the way `echo $1 $2 $3`
 
-## ARRAYS
 ### DECLARE
 * `declare` keyword is used to define data structures, for help `declare --help`
 
@@ -494,7 +493,7 @@ done
 ```
 
 ## GOOD PRACTICES
-* Always start scripts with shebang `#!`
+* Always start scripts with shebang
 ### STRICT MODE
 * Even after occurence or error, bash script keeps running, this should not happen in some cases
 * We will set flags to handle these abnormal events, these flags are set just below the shebang in general
@@ -505,6 +504,9 @@ done
 ```
 ehco "HUHU" || {echo "Failed, error encountered"; exit 1}
 ```
+
+> [!TIP]
+> Use flags just below the shebang, but if needed to hange flags in between the program, we can do so but be careful to revert them after calling the specific function of some set statements
 
 ### NO OP COMMAND
 * Testing is important, where only logic is checked but no changes are made
