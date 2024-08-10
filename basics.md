@@ -95,6 +95,20 @@ sol=$(( A-- ))
 > Precision computing, above statements give only integer answers, sometimes we need precision
 > `echo $A / $B | bc -l`
 
+### SCRIPTFLOW
+> [!TIP]
+> When we need to run multiple scripts in sequence, what will happen if one fails, others will fail too, so we must export a success status variable from the script that an be used by the next script to make decisions based on previous script's completion or success status
+
+> [!TIP]
+> Use `[[ CONDITION ]]` in conditional statements because it offers wider range of conditional expressions
+
+* `seq` can be used in for loops as it generates a sequence of numbers
+```bash
+for number in $(seq N1 N2); do
+  echo ${number}
+done
+```
+
 ## CONDITIONAL LOGIC
 ```bash
 if [[ CONDITION ]] then
@@ -161,6 +175,19 @@ fi
 ```bash
 [[ A -gt 4 || A –lt 10 ]]
 ```
+
+> [!TIP]
+> * Call another script in our script and also have the variables defined by that scripts in out file but we must also check if that file exists or not
+> ```bash
+> readonly SCRIPT_PATH="PATH_TO_SCRIPT"
+>
+> if [[ -f $(SCRIPT_PATH) ]]; then
+>   source PATH_TO_SCRIPT
+> else
+>   Statements
+> fi
+> exit 0
+> ```
 
 ### FOR LOOPS
 ```bash
@@ -313,7 +340,7 @@ echo ${height}cm
 ```
 > [!TIP]
 > #### CONVENTIONS
-> Use variable expansion as far as possible to avoid mixing up of variable values
+> Use variable expansion as far as possible to avoid mixing up of variable values in scripts
 
 * This can be used in command line arguments or special shell variables
 
@@ -411,7 +438,7 @@ ls fi[ABC]
 # GET ALL FILES NOT HAVING A, B, C AT THE END AND STARTING WITH "fi"
 ls fi[^A-C]
 
-# REMOVVE ALL FILES STARTING WITH "fi" AND ENDING WITH 1, 2, 3, 4
+# REMOVE ALL FILES STARTING WITH "fi" AND ENDING WITH 1, 2, 3, 4
 rm fi[1-4]
 
 # SOME MORE EXAMPLES
@@ -430,13 +457,31 @@ touch huhu{qwe,asd,zxc}{001..004}
 touch huhu{1..10..2} # WITH STEPS
 ```
 
+## COMMAND LINE ARGUMENTS
+* If we pass `N` command line arguments, we can access them by `$1`, `$2`, ... `$N` or like `${N}`
+* The number of command line arguments that we can pass is limite by variable `ARG_MAX`, we can see it using `getconf ARG_MAX`
+
+> [!TIP]
+> * The `shift` statement shifts the index of arguments by one, the example below prints first 3 arguments
+> ```bash
+> echo ${1}
+> shift
+> echo ${1}
+> shift
+> echo ${1}
+> ```
+
 ## EXIT CODES
 * Every command have a exit code that it returns
 
 > [!TIP]
-> Always terminate a script with `exit 0` as last statement
+> * Always terminate a script with `exit 0` as last statement
+> * We should add `exit 0` at the end of script to tell the interpreter and console that it completed
+> * `0` means that there was no error, any other value than `0` means error
 
-* `0` means that there was no error, any other value than `0` means error
+> [!TIP]
+> `basename` command is used to extract the filename or last component of a path for a specified element we pass as an argument
+> `basename qwe/asd/zxc.qaz` outputs zxc
 
 > [!TIP]
 > Cleanup and exit with non zero return code

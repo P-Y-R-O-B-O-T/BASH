@@ -187,7 +187,6 @@ done
 
 > [!TIP]
 > * We should add `exit 0` at the end of script to tell the interpreter and console that it completed
-> * But when error occurs, we should exit the script using `exit 0`
 
 ### FUNCTIONS
 * Use in generous amount
@@ -197,9 +196,6 @@ function_name() {
   local VARIABLE_NAME=VAL
 }
 ```
-> [!TIP]
-> `basename` command is used to extract the filename or last component of a path for a specified element we pass as an argument
-> `basename qwe/asd/zxc.qaz` outputs zxc
 
 ### COMMAND LINE ARGUMENTS
 * If we pass `N` command line arguments, we can access them by `$1`, `$2`, ... `$N` or like `${N}`
