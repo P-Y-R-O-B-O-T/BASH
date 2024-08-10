@@ -90,7 +90,7 @@ $ expr $A \* $B
 * In script
 ```bash
 sol=$(( A + B ))
-sol=$(( A-B ))
+sol=$(( A - B ))
 sol=$((A/B))
 sol=$(( A * B ))
 sol=$(( ++A ))
