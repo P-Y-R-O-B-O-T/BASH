@@ -506,7 +506,7 @@ ehco "HUHU" || {echo "Failed, error encountered"; exit 1}
 ```
 
 > [!TIP]
-> Use flags just below the shebang, but if needed to hange flags in between the program, we can do so but be careful to revert them after calling the specific function of some set statements
+> Use flags just below the shebang, but if needed to hange flags in between the program, we can do so but be careful to set or unset them after calling the specific function of some set of commands
 
 ### NO OP COMMAND
 * Testing is important, where only logic is checked but no changes are made
