@@ -503,7 +503,6 @@ touch huhu{1..10..2} # WITH STEPS
 * `[ ]` or `test` in conditionals are builtin and `[[ ]]` are keywords, see `man [` or `man test`
 * `[[ ]]` are not posix compliant and do not have backward compatibility
 
-
 ## EXIT CODES
 * Every command have a exit code that it returns
 
@@ -539,6 +538,14 @@ touch huhu{1..10..2} # WITH STEPS
 
 ## STREAMS
 * Flow of data between processes
+
+> [!IMPORTANT]
+> ### FILE DESCRIPTORS
+> * File descriptors or file handles are integer identifiers that specify data structures
+> * 0 and 1 and 2 are reserved for stdin and stdout and stderr
+> * Open a file Descriptor and assign it to a file `exec N<> FILE_PATH`, we must try to use `N` >= 3
+> * Use the file descriptor as `COMMAND <&N`
+> * Close the file descriptor `exec N>&-`
 
 > [!TIP]
 > ### CHECK IF THE IMPOT WAS FROM KEYBOARD OR A PIPE
@@ -596,14 +603,6 @@ fi
 * To make a script return a exit status of error when a command in the script fails add `set -o pipefail` below the shebang
 * To prevent the output files from being overwritten add `set -o noclobber` below the shebang
 
-> [!CAUTION]
-> ### XARGS
-> Do it !
-> ### EVAL
-> Too common, used to run a script provided as string `VAR=VAL; eval "${VAR}"`
-> ### PRINTF
-> * `echo` alternatve with advanced features
-
 ## SUBSHELLS and COMMAND SUBSTITUTION and SUBPROCESS
 * Running a complex command and capturing output in a variable, this runs as a subshell
 * Subshell is a shell instance running under another shell instance
@@ -640,21 +639,6 @@ echo ${curr_env}
 * `$-` contains flags in use by the script, generally inside script but can be used anywhere
 * `$_` contains the last argument of previous command
 
-> [!TIP]
-> * Creating own exit codes and in reproducable manner, like this
-> ```bash
-> terminate() {
->   local msg="${1}"
->   local code="${2:-160}" # SETTING DEFAULT VALUE OF ERR CODE IS 160
->   echo "Error: ${msg}" >&2
->   exit "${code}"
-> }
->
-> # CALL TERMINATION
-> terminate "Err Msg" "${EXIT_STATUS}"
-> terminate "Err Msg" "69"
-> ```
-
 ### $0
 * Reading the file and modifying it with time
 * Get the path of the script and then read it
@@ -666,6 +650,7 @@ cat ${SCRIPT_PATH}
 ```
 
 > [!IMPORTANT]
+> ### IFS
 > * See `IFS` environment variable, it is used for default seperators for and values inside the script and interactive shell too, changing it for specific purposes is possible and set it like `IFS=",.:"` or something else inside the script, its default value is ` \t\n`
 > * `set -- ${VAR}` var is a string of elements seperated by elements and this command assigns the elemets to command line argument variables and then we can access them in the way `echo $1 $2 $3`
 
@@ -803,3 +788,11 @@ log() {
   echo $(date -u +"%y-%m-%d_%H:%M:%S~") "${@}"
 }
 ```
+> [!CAUTION]
+> ### XARGS
+> Do it !
+> ### EVAL
+> Too common, used to run a script provided as string `VAR=VAL; eval "${VAR}"`
+> ### PRINTF
+> * `echo` alternatve with advanced features
+
