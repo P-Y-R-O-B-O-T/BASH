@@ -278,7 +278,8 @@ function_name() {
 }
 ```
 
-> [!TIP]
+> [!IMPORTANT]
+> ### SPECIAL VARIABLE FOR FUNCTIONS
 > * To access arguments accessed to function, use `${N}` inside the function
 > * To get number of arguments passed to function, use `$#` inside the function
 > * To get array of all arguments passed to function, use `$@` inside function
