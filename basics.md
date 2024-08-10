@@ -1,13 +1,29 @@
 ## BASH
-* Sequence of statements
+* A shell script is just a series of commands put along in a clever way to achieve some automation
+* A shell script is non interactive way to interact with terminal unless we prompt the user to give an input
 * Before executing, provide execution permissions using `chmod`
 * While creating executables, do not add `.sh` extension
 * To make it accessable to all paths, copy the executable to `/bin/` and `/usr/bin/`
 
-### VARIABLES
+* Shell is just a program that processes the commands and outputs the result
+* Terminal is a program that allows us to interact with different kind of shells
+* `POSIX` is a standard to ensure that different operating systems adhere for interoperability and compatibility, `POSIX` compliant operating systems will have a similar kind of shell
+
+> [!NOTE]
+> * The `PS1` variable for shell scripts is empty string
+
+> [!NOTE]
+> There are many kind of shells, `bash` is the default for `POSIX` compliant systems
+
+## VARIABLES
 * Case sensitive
 * `VAR=VAL`, `VAL` can be integer, string, array, associative array
-* Define read only variables `readonly VAR=VAL`
+
+> [!TIP]
+> ### CONVENTIONS
+> * All variables should be in lower case and use underscore as word seperator
+> * All constants should be in upper case and use underscore as word seperator and it should be marked as readonly so that its value can't be changed `readonly VAR_NAME=VAL`
+> * All variables that could be used by another script outside the local script, we must export it as `export VAR_NAME`
 
 EXAMPLES
 ```bash
@@ -248,6 +264,13 @@ esac
 > ```
 
 ## FUNCTIONS
+* Reusable pieces of programs
+> ### CONVENTIONS
+> * Always written in lower case and use underscore as word seperator
+> * We use parenthesis without space as soon as function name ends, then a space then open a curly brace to define function body
+> * Statements inside the functions should be indented as with respect with the function
+> * The function closing curly brace always comes in a new line and indented at the same level as the function name
+
 ```bash
 function_name() {
   STATEMENTS
@@ -271,6 +294,35 @@ function_name() {
 >
 > returned_value=$(function_name)
 > ```
+
+## EXPANDING VARIABLES
+* We can use variable expanding to access a variables value `echo ${VARIABLE_NAME}`
+* This is useful in following case, first line 2 gives empty output as `heightcm` is not a variable that is defined
+```bash
+height="190"
+
+echo $heightcm
+
+echo #{height}cm
+```
+* This can be used in command line arguments or special shell variables
+
+> [!IMPORTANT]
+> * Using double quotes around variable expantion like below will avoid variable from splitting into different elements, specially in case of arrays
+> ```bash
+> #!/bin/bash
+>
+> # THESE TWO LOOPS PRODUCE DIFFERENT OUTPUTS
+> string="one two three"
+> for element in ${string}; do
+>   echo ${element}
+> done
+> for element in "${string}"; do
+>   echo ${element}
+> done
+> ```
+
+* This is because that there is a special environment variable `IFS` that defaults to (tab or space or line break) any word contained in a string variable seperated by these will get split and will be considered as different elements as parsed by shell interpreter
 
 ## EXIT CODES
 * Every command have a exit code that it returns

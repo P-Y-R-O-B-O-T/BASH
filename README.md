@@ -60,7 +60,7 @@
 >   echo ${element}
 > done
 > ```
-> * This is because that there is a special environment variable that defaults to (tab or space or line break) any word contained in a string variable seperated by these will get split and will be considered as different elements as parsed by shell interpreter
+> * This is because that there is a special environment variable `IFS` that defaults to (tab or space or line break) any word contained in a string variable seperated by these will get split and will be considered as different elements as parsed by shell interpreter
 
 ```bash
 # PRINT SUBSTRING
