@@ -482,7 +482,7 @@ touch huhu{1..10..2} # WITH STEPS
 * `pgrep -o bash` to get PID of current bash session
 * `$$` holds PID of parent shell
 
-### SHEBANG
+## SHEBANG
 * Tells which program to use for executing itself, if not specified, it uses the parent shell's program
 * See the shell `echo $SHELL`
 * `#!/bin/bash`
