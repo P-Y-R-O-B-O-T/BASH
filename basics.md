@@ -604,3 +604,171 @@ fi
 > ### PRINTF
 > * `echo` alternatve with advanced features
 
+## SUBSHELLS and COMMAND SUBSTITUTION and SUBPROCESS
+* Running a complex command and capturing output in a variable, this runs as a subshell
+* Subshell is a shell instance running under another shell instance
+* This also supports command chaining
+```bash
+VAR=$(COMPLEX_CHAIN_OF_COMMANDS)
+```
+EXAMPLES
+```bash
+curr_env="huhu"
+a=$(echo  ${curr_env})
+```
+```bash
+curr_env="huhu"
+(
+sleep 1
+echo ${curr_env}
+)
+```
+
+## COMMAND CHAINING
+* `COMMAND && COMMAND && COMMAND ...` next command executes only if the command before it executes successfully, useful when we need series of commands to be done perfectly
+* `COMMAND || COMMAND || COMMAND ...` next command executes only if the command before it fails to execute, useful in error resolving methods
+
+## SPECIAL VARIABLES
+* Allow access to current state of shell and command line arguments passed
+* `$?` stores info for last excuted command, which is exit status, generally used in interactive shell, rare in script
+* `$0` stores name of script being run
+* `$#` number of arguments passed, generally used inside script
+* `$*` string of all arguments being passed, generally used inside script and functions `VAR=$*`
+* `$@` array of all values passed as argument, generally used inside script and functions `VAR=$@`
+* `$$` Current process ID, can be used anywhere
+* `$!` ID of background job, generally inside script but can be used anywhere, stores info of last program sent to background
+* `$-` contains flags in use by the script, generally inside script but can be used anywhere
+* `$_` contains the last argument of previous command
+
+> [!TIP]
+> * Creating own exit codes and in reproducable manner, like this
+> ```bash
+> terminate() {
+>   local msg="${1}"
+>   local code="${2:-160}" # SETTING DEFAULT VALUE OF ERR CODE IS 160
+>   echo "Error: ${msg}" >&2
+>   exit "${code}"
+> }
+>
+> # CALL TERMINATION
+> terminate "Err Msg" "${EXIT_STATUS}"
+> terminate "Err Msg" "69"
+> ```
+
+### $0
+* Reading the file and modifying it with time
+* Get the path of the script and then read it
+```bash
+# ABS_PATH
+readonly SCRIPT_PATH=${0}
+# readonly SCRIPT_NAME=${0##*/}
+cat ${SCRIPT_PATH}
+```
+
+> [!IMPORTANT]
+> * See `IFS` environment variable, it is used for default seperators for and values inside the script and interactive shell too, changing it for specific purposes is possible and set it like `IFS=",.:"` or something else inside the script, its default value is ` \t\n`
+> * `set -- ${VAR}` var is a string of elements seperated by elements and this command assigns the elemets to command line argument variables and then we can access them in the way `echo $1 $2 $3`
+
+## DECLARE
+* `declare` keyword is used to define data structures, for help `declare --help`
+
+| EXPRESSION | EFFECT |
+| ---------- | ------ |
+| `declare -r VAR=VAL` | create readonly variable |
+| `declare -u VAR=STRING` | Have string in upper case |
+| `declare -l VAR=STRING` | Have string in lower case |
+
+> [!TIP]
+> See `typeset`
+
+> [!TIP]
+> A string can be treated as numbers.
+> This is done using dynamically typed syntax which allows us to reassign different type of values to a single variable
+> ```
+> VAR="NUMBER"
+> echo $$((VAR+1))
+> ```
+
+## ARRAY
+* Index start from 0
+
+> [!TIP]
+> While declaring an array, the sepereators between the elements is one of the characters which is present if `IFS` variable
+
+```bash
+# DECLARE ARRAY
+VAR=(VAL1 VAL2 VAL3 ...)
+declare -a VAR=(VAL1 VAL2 VAL3 ...)
+
+# CHANGE VALUE
+VAR[N]=NEW_VALUE
+
+# ACCESS ELEMENT
+echo ${VAR[N]}
+
+# ACCESS / REERENCE WHOLE ARRAY
+echo ${VAR[@]}
+
+# LOOP ACCESS, BUT ELEMENT GET SPLIT
+for ELEMENT in ${VAR[@]}; do
+  echo "${ELEMENT}"
+done
+
+# LOOP ACCESS, BUT ELEMENT DO NOT GET SPLIT
+for ELEMENT in "${VAR[@]}"; do
+  echo "${ELEMENT}"
+done
+
+# INSERT ELEMENT, IF ARRAY IS FROM [0, N-1]
+VAR[N]=VALUE
+VAR[${#VAR[@]}]=VALUE
+
+# GET ARRAY LEN USING PARAMETER EXPANTION WITH VARIABLE SUBSTITUTION
+a=${#VAR[@]}
+
+# INSERT IN BETWEEN AT INDEX N USING PARAMETER EXPANTION AND VARIABLE SUBSTITUTION
+VAR=("${VAR[@]:0:N}" VALUE "${VAR[@]:N}")
+
+# REMOVE ARRAY ELEMENT
+# This just the value at the inedx to "" but the index stays there and shows no value
+unset VAR[N]
+
+# EMPTY ENTIRE ARRAY
+unset VAR[@]
+
+# APPEND TO ARRAY
+VAR+=(VAL1 VAL2 VAL3 ...)
+```
+
+> [!TIP]
+> - See sorting an array
+> - We can have nested arrays
+
+## ASSOCIATIVE ARRAY
+* Works like hashmap
+* Access values using keys
+```bash
+# DECLARE
+declare -A VAR=( [KEY1]=VALUE1 [KEY2]=VALUE2 ... )
+
+# ACCESS ELEMENT
+echo ${VAR[KEY]}
+
+# ADD / UPDATE KEY VALUE PAIR
+VAR[KEY]=VALUE
+
+# REMOVE KEY VALUE PAIR
+unset VAR[KEY]
+
+# REMOVE ALL VAY VALUE PAIRS
+unset VAR
+
+# GET ALL KEYS
+echo ${!VAR[@]}
+
+# ACCESS ALL KEY VALUE PAIRS
+for key in "${!VAR[@]}"; do
+  echo "${key} : ${VAR[${key}]}"
+done
+```
+
