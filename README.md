@@ -91,7 +91,7 @@ $ expr $A \* $B
 ```bash
 sol=$(( A + B ))
 sol=$(( A - B ))
-sol=$((A/B))
+sol=$(( A / B ))
 sol=$(( A * B ))
 sol=$(( ++A ))
 sol=$(( --A ))
