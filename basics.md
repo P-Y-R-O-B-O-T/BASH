@@ -298,7 +298,10 @@ function_name() {
 > returned_value=$(function_name)
 > ```
 
-## EXPANDING VARIABLES
+## EXPANSIONS
+* Way to access variables and objects and manipulation
+
+### EXPANDING VARIABLES
 * We can use variable expanding to access a variables values in the form `echo ${VARIABLE_NAME}`
 * This is useful in following case, first line 2 gives empty output as `heightcm` is not a variable that is defined, but second one gives correct output
 ```bash
@@ -309,7 +312,7 @@ echo $heightcm
 echo ${height}cm
 ```
 > [!TIP]
-> ### CONVENTIONS
+> #### CONVENTIONS
 > Use variable expansion as far as possible to avoid mixing up of variable values
 
 * This can be used in command line arguments or special shell variables
@@ -341,7 +344,7 @@ echo "${VAR:START:END}"
 echo "${#VAR}"
 ```
 
-## PARAMETER EXPANTION
+### PARAMETER EXPANTION
 * `#` for removing prefix and `%` for removing suffixes
 * `echo "${VAR#PREFIX_TO_REMOVE%SUFFIX_TO_REMOVE}`, if prefix and suffix do not mat from starting and ending, they do not get removed
 * We also have a pattern called longest prefix removal `##` and longest suffix removal `%%` which removes the pattern's first occurance as prefix or postfix, mainly used in paths
