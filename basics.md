@@ -299,15 +299,19 @@ function_name() {
 > ```
 
 ## EXPANDING VARIABLES
-* We can use variable expanding to access a variables value `echo ${VARIABLE_NAME}`
-* This is useful in following case, first line 2 gives empty output as `heightcm` is not a variable that is defined
+* We can use variable expanding to access a variables values in the form `echo ${VARIABLE_NAME}`
+* This is useful in following case, first line 2 gives empty output as `heightcm` is not a variable that is defined, but second one gives correct output
 ```bash
 height="190"
 
 echo $heightcm
 
-echo #{height}cm
+echo ${height}cm
 ```
+> [!TIP]
+> ### CONVENTIONS
+> Use variable expansion as far as possible to avoid mixing up of variable values
+
 * This can be used in command line arguments or special shell variables
 
 > [!IMPORTANT]
