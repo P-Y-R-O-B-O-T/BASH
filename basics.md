@@ -15,6 +15,13 @@
 > [!NOTE]
 > There are many kind of shells, `bash` is the default for `POSIX` compliant systems
 
+> [!TIP]
+> ## SHEBANG
+> * Tells which program to use for executing itself, if not specified, it uses the parent shell's program
+> * See the shell `echo $SHELL`
+> * `#!/bin/bash`
+
+
 ## VARIABLES
 * Case sensitive
 * `VAR=VAL`, `VAL` can be integer, string, array, associative array
@@ -481,11 +488,6 @@ touch huhu{1..10..2} # WITH STEPS
 * `strace -Tfp PID` see all system calls made by the process
 * `pgrep -o bash` to get PID of current bash session
 * `$$` holds PID of parent shell
-
-## SHEBANG
-* Tells which program to use for executing itself, if not specified, it uses the parent shell's program
-* See the shell `echo $SHELL`
-* `#!/bin/bash`
 
 ## BUILT-IN COMMAND
 * Builtin commands do not generate new PIDs
