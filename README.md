@@ -73,7 +73,7 @@ read -n 2 -p "Enter decision" user_decision
 
 ### ARITHMETIC OPERATIONS
 * In interactive shell prompt
-```
+```bash
 $ expr 6 + 3
 $ expr 6 - 3
 $ expr 6 / 3
@@ -88,7 +88,7 @@ $ expr $A / $B
 $ expr $A \* $B
 ```
 * In script
-```
+```bash
 sol=$(( A + B ))
 sol=$(( A-B ))
 sol=$((A/B))
@@ -329,7 +329,7 @@ function_name() {
 > ### RETURN VALUE
 > We can also return values from functions.
 > The value we echo is returned
-> ```
+> ```bash
 > function_name() {
 >   echo "HUHU"
 > }
@@ -394,11 +394,11 @@ Examples
 # SUBSTRING REPLACEMENT # PARAMETER EXPANTION
 echo "${VAR:WORD_SUBSTRING_TO_BE_REPLACED:REPLACING_WORD_SUBSTRING}"
 ```
-```
+```bash
 # REMOVE ALL `/` AND FOLLOWING TEXT EXCEPT THE FILE_NAME, HERE WE ARE USING REGEX
 echo "${VAR##*/}"
 ```
-```
+```bash
 # REMOVE LAST AND FIRST WORD, USING REGEX OR GLOB
 echo "${VAR#* % *}"
 ```
@@ -542,18 +542,18 @@ touch huhu{1..10..2} # WITH STEPS
 
 > [!TIP]
 > ### CHECK IF THE IMPOT WAS FROM KEYBOARD OR A PIPE
-> ```
+> ```bash
 > if [[ -t 0 ]]; then
 >   echo "Keyboard"
 > else
 >   echo "Pipe or file "
 > fi
 > ```
-> ```
+> ```bash
 > echo "HUHU" | test -t 1 && echo "From Pipe"
 > ```
 > * Trace sys calls for input and output redirection
-> ```
+> ```bash
 > sudo strace -Tfp $$ 2>&1 | grep -E 'read|write' &
 > ```
 
