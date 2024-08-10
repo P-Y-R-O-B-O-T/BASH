@@ -512,9 +512,8 @@ touch huhu{1..10..2} # WITH STEPS
 > * We should add `exit 0` at the end of script to tell the interpreter and console that it completed
 > * `0` means that there was no error, any other value than `0` means error
 
-> [!TIP]
-> `basename` command is used to extract the filename or last component of a path for a specified element we pass as an argument
-> `basename qwe/asd/zxc.qaz` outputs zxc
+> [!IMPORTANT]
+> * Must use `exit "${code}"` to exit the script when error occurs with the help of if statements of switch statements
 
 > [!TIP]
 > Cleanup and exit with non zero return code
@@ -536,4 +535,72 @@ touch huhu{1..10..2} # WITH STEPS
 > fi
 >
 > exit 0
+> ```
+
+## STREAMS
+* Flow of data between processes
+
+> [!TIP]
+> ### CHECK IF THE IMPOT WAS FROM KEYBOARD OR A PIPE
+> ```
+> if [[ -t 0 ]]; then
+>   echo "Keyboard"
+> else
+>   echo "Pipe or file "
+> fi
+> ```
+> ```
+> echo "HUHU" | test -t 1 && echo "From Pipe"
+> ```
+> * Trace sys calls for input and output redirection
+> ```
+> sudo strace -Tfp $$ 2>&1 | grep -E 'read|write' &
+> ```
+
+### HEREDOC and HERESTRINGS
+* Multiline text input
+* `EOF` is a token and can be any string
+```bash
+cat <<  EOF
+...
+...
+...
+EOF
 ```
+```bash
+cat > FILE_PATH << EOF
+...
+...
+...
+EOF
+```
+* `COMMAND <<< "HUHU"`
+
+EXAMPLE
+```bash
+usage() {
+  cat << USAGE
+This
+Is
+Docs
+USAGE
+}
+
+if [[ $# -ne 1 ]]; then
+  usage
+  exit 1
+fi
+```
+
+## PIPEFAIL
+* To make a script return a exit status of error when a command in the script fails add `set -o pipefail` below the shebang
+* To prevent the output files from being overwritten add `set -o noclobber` below the shebang
+
+> [!CAUTION]
+> ### XARGS
+> Do it !
+> ### EVAL
+> Too common, used to run a script provided as string `VAR=VAL; eval "${VAR}"`
+> ### PRINTF
+> * `echo` alternatve with advanced features
+
