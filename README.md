@@ -548,7 +548,7 @@ touch huhu{1..10..2} # WITH STEPS
 > * Close the file descriptor `exec N>&-`
 
 > [!TIP]
-> ### CHECK IF THE IMPOT WAS FROM KEYBOARD OR A PIPE
+> ### CHECK IF THE INPUT WAS FROM KEYBOARD OR A PIPE
 > ```bash
 > if [[ -t 0 ]]; then
 >   echo "Keyboard"
@@ -796,3 +796,92 @@ log() {
 > ### PRINTF
 > * `echo` alternatve with advanced features
 
+## AWK
+* Used for text editing
+* Row number and column number starts from 1
+* Data can be passed to awk using pipes instead of files and it will do its job
+* Variable definations are a feature too
+* It can handle irregular whitespace patterns
+* `{}` is the action block, here all the magic happens
+* `-F` parameter can help changing default field seperator or delimiter
+> [!TIP]
+> It is a programming language in itself, we can define `SCRIPTNAME.awk` and have complete instructions it and use in a reproducable manner
+
+EXAMPLES
+```bash
+# PRINT ENTIRE N th COLUMN
+awk 'print $N' INPUT_FILE
+
+# PRINT VALUE AT COLUMN N and ROW M
+awk 'NR == "M" {print $N} INPUT_FILE'
+
+# PRINT A STRING FOR EACH ROW IN THE INPUT_FILE
+awk '{print "HUHU", "HUHA"}' INPUT_FILE
+
+# PRINT SERIAL NUMBER WITH OUTPUT
+awk '{ print NR, $1}' INPUT_FILE
+
+# PRINT NUMBER OF COLUMN
+awk '{print NF}' INPUT_FILE
+
+# PRINT A GOOD FORMATTED STRING
+awk '{print "huhu is here", NF, "and", NR}' INPUT_FILE
+
+# PRINT LAST COLUMN
+awk '{print $NF}' INPUT_FILE
+
+# PRINT INPUT_FILE NAME
+awk '{print FILENAME}' INPUT_FILE # RETURNS EMPTY FOR PIPED INPUT
+
+# SPECIFY SEPERATOR, CAN BE ANY CHARACTER OR COMBINATION OF CHARACTERS
+awk -F "," '' INPUT_FILE
+
+# DEFINE A VARIABLE, THE BEGIN BLOCK IS RUN BEFORE PROCESSING ANY INPUT RECORDS
+awk -v VAR="VALUE" 'BEGIN {print VAR}' INPUT_FILE
+
+# GET INTO CONDITIONALS
+awk -v VAR="NUMBER" '$N >= VAR {print $2}'
+
+# GET INTO LOGICAL CONDITIONALS
+awk -v VAR1="NUMBER1" VAR2="NUMBER2" '$N >= VAR1 || $N <= VAR2 {print $N}'
+```
+
+## SED
+* Editing strema from pipes and files
+```bash
+# SUBSTITUTION IN GLOBAL MODE
+sed 's/TEXT_TO_BE_REPLACED/REPLACEMENT/g' FILE
+
+# SUPRESS AUTOMATIC PRINTING
+sed -n 'COMMAND_SCRIPT' FILE
+
+# PRINT N th LINE OF INPUT
+sed -n 'Np' FILE # `p` IS FOR PRINT
+
+# DELETE N th LINE OF INPUT
+sed -n 'Nd' FILE
+
+# DELETE MULTIPLE LINES (FROM [N to M])
+sed -n 'N,Md' FILE
+
+# EDIT FILE IN INPLACE MODIFICATION
+sed -n -i 'COMMAND_SCRIPT' FILE
+
+# PRINT LINES MATCHING A WORD
+sed -n '/WORD_TO_FIND/p' FILE
+
+# DELETE LINES THAT MATCHES A WORD
+sed -n '/WORD_TO_FIND/d' FILE
+
+# FIND AN EXACT MATCH
+sed -n '/\bWORD_TO_FIND\b/p' FILE
+
+# PASS MULTIPLE SCRIPTS
+sed -n -e 'COMMAND_SCRIPT1' -e 'COMMAND_SCRIPT2' ... FILE
+
+# SUBSTITUTE EXACT MATCHING WORDS
+sed -n 's/\bWORD_TO_FIND\b/REPLACEMENT' FILE
+
+# SUBSTITUTE ON N th LINE and REPLACE M WORDS
+sed -n 'N s/WORD_TO_FIND/REPLACEMENT/M'
+```
