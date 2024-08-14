@@ -144,3 +144,64 @@ ls -l "$1" | { read PERMS LCOUNT OWNER GROUP SIZE CRDATE CRTIME FILE ;
 > * Set `$TMOUT` in `~/.bashrc` as `readonly TMOUT=100` so that users from the shell are not able to change the value
 > ## TERMINAL SANE
 > * After aborting SSH session and can't see anything meaningful just type `stty` and hit enter
+
+> [!TIP]
+> ## RUN ALL SCRIPTS IN A DIRECTORY
+> ```bash
+> for SCRIPT in /path/to/scripts/dir/*; do
+>   if [ -f "$SCRIPT" -a -x "$SCRIPT" ]; then
+>     $SCRIPT
+>   fi
+> done
+> ```
+
+> [!TIP]
+> ## EMBED DOCS IN SCRIPT
+> ```bash
+> : << END_OF_DOCS
+> ...
+> ...
+> ...
+> END_OF_DOCS
+> ```
+
+> [!IMPORTANT]
+> ## READABLITY
+> ``` bash
+> [ -n "$results" ] \
+> && echo "Got a good result in $results" \
+> || echo 'Got an empty result, something is wrong'
+> ```
+
+> [!IMPORTANT]
+> ## BRANCH MANY WAYS USING CASE
+> ```bash
+> case $FN in
+>   *.gif) gif2png $FN
+>     ;;
+>   *.png) pngOK $FN
+>     ;;
+>   *.jpg) jpg2gif $FN
+>     ;;
+>   *.tif | *.TIFF) tif2jpg $FN
+>     ;;
+>   *) printf "File not supported: %s" $FN
+>     ;;
+> esac
+> ```
+> ```bash
+> # use other endings for case
+> case $FN in
+>   *.gif) gif2png $FN
+>     ;;& # keep looking
+>   *.png) pngOK $FN
+>     ;;& # keep looking
+>   *.jpg) jpg2gif $FN
+>     ;;& # keep looking
+>   *.tif) tif2jpg $FN
+>     ;& # fall through
+>   *.* ) echo "two.words"
+>     ;;
+>   * ) echo "oneword"
+> esac
+> ```
