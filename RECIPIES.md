@@ -205,3 +205,80 @@ ls -l "$1" | { read PERMS LCOUNT OWNER GROUP SIZE CRDATE CRTIME FILE ;
 >   * ) echo "oneword"
 > esac
 > ```
+
+> [!TIP]
+> ## FORMAT LONG PARAGRAPHS FOR READIBILITY
+> ```bash
+> fmt MANGLED_TEXT
+> ```
+
+> [!IMPORTANT]
+> ## OVERRIDING A COMMAND
+> ```bash
+> function cd () {
+>   if [[ $1 = "..." ]]; then
+>     builtin cd ../..
+>   else
+>     builtin cd "$1"
+>   fi
+> }
+> ```
+
+> [!IMPORTANT]
+> ## PARSING OUTPUT IN ARRAY
+> ```bash
+> #!/usr/bin/env bash
+> # cookbook filename: parseViaArray
+> #
+> # find the file size
+> # use an array to parse the ls -l output into words
+> LSL=$(ls -ld $1)
+> declare -a MYRA
+> MYRA=($LSL)
+> echo the file $1 is ${MYRA[4]} bytes.
+> ```
+
+## PARSING OUTPUT DATA OF A BUILTIN COMMAND
+```bash
+#!/usr/bin/env bash
+# cookbook filename: parseViaFunc
+#
+# parse ls -l via function call
+# an example of output from ls -l follows:
+# -rw-r--r-- 1 albing users 126 Jun 10 22:50 fnsize
+
+function lsparts () {
+  PERMS=$1
+  LCOUNT=$2
+  OWNER=$3
+  GROUP=$4
+  SIZE=$5
+  CRMONTH=$6
+  CRDAY=$7
+  CRTIME=$8
+  FILE=$9
+}
+
+lsparts $(ls -l "$1")
+echo $FILE has $LCOUNT 'link(s)' and is $SIZE bytes long.
+```
+
+## PARSING WITH READ STATEMENT
+```bash
+#!/usr/bin/env bash
+# cookbook filename: parseViaRead
+#
+# parse ls -l with a read statement
+# an example of output from ls -l follows:
+# -rw-r--r-- 1 albing users 126 2006-10-10 22:50 fnsize
+
+ls -l "$1" | { read PERMS LCOUNT OWNER GROUP SIZE CRDATE CRTIME FILE ;
+               echo $FILE has $LCOUNT 'link(s)' and is $SIZE bytes long. ;
+             }
+```
+
+> [!TIP]
+> ## PARSING READ INTO ARRAY
+> ```bash
+> read -a MYRAY
+> ```
