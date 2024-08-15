@@ -379,3 +379,71 @@ ls -l "$1" | { read PERMS LCOUNT OWNER GROUP SIZE CRDATE CRTIME FILE ;
 >
 > ## RESTRICT GUEST USERS
 > * There are mant users in the others catetory, they must be restricted
+
+> [!TIP]
+> ## REDIRECT SCRIPT OUTPUT FOR LIFETIME
+> ```bash
+> # Optional, save the "old" STDERR
+> exec 3>&2
+> # Redirect any output to STDERR to an error logfile instead
+> exec 2> /path/to/error_log
+>
+> # Script with "globally" redirected STDERR goes here
+>
+> # Turn off redirect by reverting STDERR and closing FH3
+> exec 2>&3-
+> ```
+
+> [!IMPORTANT]
+> ## LOGGING TO SYSLOG
+> ```bash
+> logger -p local0.notice -t ${0##*/}[$$] test message
+>
+> # LOG ON REMOTE MACHINE
+> echo "<133>${0##*/}[$$]: Test syslog message from bash" > /dev/udp/loghost.example.com/514
+> # USING NETCAT
+> echo "<133>${0##*/}[$$]: Test syslog message from Netcat" | nc -w1 -u loghost 514
+> ```
+
+> [!TIP]
+> ## DOING TWO THINGS AT A TIME
+> * Bash 4+ uses a command `coproc` to do so, normally a pipe can make data flow only on one side, but to do so in reversemanner or coordinated  manner, this is used
+
+> [!IMPORTANT]
+> ## RUN SSH COMMAND ON MULTIPLE HOSTS
+> ```bash
+> for host in host{1..3}; do
+>   echo "${host}"
+>   ssh $host 'grep "$HOSTNAME" /etc/hosts'
+> done
+> ```
+
+> [!TIP]
+> ## PRIVATE UTILITY STASH
+> * Create a `~/bin` directory
+> ```bash
+> PATH="$PATH:~/bin"
+>
+> # SCRIPT
+> ```
+
+> [!TIP]
+> ## INPUTRC
+> * Set input behaviour `~/.inputrc`
+
+> [!IMPORTANT]
+> ## SYNC HISTORY BETWEEN SESSIONS
+> ```bash
+> alias hs='history -a ; history -n'
+> ```
+> * Also see shell history options
+
+> [!TIP]
+> ## CREATE and CD INTO THE DIRECTORY IN SAME COMMAND
+> ```bash
+> mkdir NAME | cd $-
+> ```
+
+> [!TIP]
+> ## BASH LOADABLE BUILTINS
+> * Having code that is loadable into bash
