@@ -237,48 +237,144 @@ ls -l "$1" | { read PERMS LCOUNT OWNER GROUP SIZE CRDATE CRTIME FILE ;
 > MYRA=($LSL)
 > echo the file $1 is ${MYRA[4]} bytes.
 > ```
-
-## PARSING OUTPUT DATA OF A BUILTIN COMMAND
-```bash
-#!/usr/bin/env bash
-# cookbook filename: parseViaFunc
-#
-# parse ls -l via function call
-# an example of output from ls -l follows:
-# -rw-r--r-- 1 albing users 126 Jun 10 22:50 fnsize
-
-function lsparts () {
-  PERMS=$1
-  LCOUNT=$2
-  OWNER=$3
-  GROUP=$4
-  SIZE=$5
-  CRMONTH=$6
-  CRDAY=$7
-  CRTIME=$8
-  FILE=$9
-}
-
-lsparts $(ls -l "$1")
-echo $FILE has $LCOUNT 'link(s)' and is $SIZE bytes long.
-```
-
-## PARSING WITH READ STATEMENT
-```bash
-#!/usr/bin/env bash
-# cookbook filename: parseViaRead
-#
-# parse ls -l with a read statement
-# an example of output from ls -l follows:
-# -rw-r--r-- 1 albing users 126 2006-10-10 22:50 fnsize
-
-ls -l "$1" | { read PERMS LCOUNT OWNER GROUP SIZE CRDATE CRTIME FILE ;
-               echo $FILE has $LCOUNT 'link(s)' and is $SIZE bytes long. ;
-             }
-```
+>
+> ## PARSING OUTPUT DATA OF A BUILTIN COMMAND
+> ```bash
+> #!/usr/bin/env bash
+> # cookbook filename: parseViaFunc
+> #
+> # parse ls -l via function call
+> # an example of output from ls -l follows:
+> # -rw-r--r-- 1 albing users 126 Jun 10 22:50 fnsize
+>
+> function lsparts () {
+>   PERMS=$1
+>   LCOUNT=$2
+>   OWNER=$3
+>   GROUP=$4
+>   SIZE=$5
+>   CRMONTH=$6
+>   CRDAY=$7
+>   CRTIME=$8
+>   FILE=$9
+> }
+>
+> lsparts $(ls -l "$1")
+> echo $FILE has $LCOUNT 'link(s)' and is $SIZE bytes long.
+> ```
+>
+> ## PARSING WITH READ STATEMENT
+> ```bash
+> #!/usr/bin/env bash
+> # cookbook filename: parseViaRead
+> #
+> # parse ls -l with a read statement
+> # an example of output from ls -l follows:
+> # -rw-r--r-- 1 albing users 126 2006-10-10 22:50 fnsize
+>
+> ls -l "$1" | { read PERMS LCOUNT OWNER GROUP SIZE CRDATE CRTIME FILE ;
+>                echo $FILE has $LCOUNT 'link(s)' and is $SIZE bytes long. ;
+>              }
+> ```
 
 > [!TIP]
 > ## PARSING READ INTO ARRAY
 > ```bash
 > read -a MYRAY
 > ```
+
+> ## SECURE SCRIPT TEMPLATE
+> ```bash
+> #!/usr/bin/env bash
+> # cookbook filename: security_template
+> # Set a sane/secure path
+> PATH='/usr/local/bin:/bin:/usr/bin'
+> # It's almost certainly already marked for export, but make sure
+> \export PATH
+> # Clear all aliases. Important: leading \ inhibits alias expansion.
+> \unalias -a
+> # Clear the command path hash
+> hash -r
+> # Set the hard limit to 0 to turn off core dumps
+> ulimit -H -c 0 --
+> # Set a sane/secure IFS (note this is bash & ksh93 syntax only--not portable!)
+> IFS=$' \t\n'
+>
+> # Set a sane/secure umask variable and use it
+> # Note this does not affect files already redirected on the command line
+> # 022 results in 0755 perms, 077 results in 0700 perms, etc.
+> UMASK=022
+> umask $UMASK
+>
+> until [ -n "$temp_dir" -a ! -d "$temp_dir" ]; do
+>   temp_dir="/tmp/meaningful_prefix.${RANDOM}${RANDOM}${RANDOM}"
+> done
+> mkdir -p -m 0700 $temp_dir || (echo "FATAL: Failed to create temp dir '$temp_dir': $?"; exit 100)
+> # Do our best to clean up temp files no matter what
+> # Note $temp_dir must be set before this, and must not change!
+> cleanup="rm -rf $temp_dir"
+> trap "$cleanup" ABRT EXIT HUP INT QUIT
+> ```
+>
+> ## FIND WORLD WRITABLE DIRECTORIES
+> ```bash
+> #!/usr/bin/env bash
+> # cookbook filename: chkpath.1
+> # Check your $PATH for world-writable or missing directories
+> exit_code=0
+>
+> for dir in ${PATH//:/ }; do
+>   [ -L "$dir" ] && printf "%b" "symlink, "
+>   if [ ! -d "$dir" ]; then
+>     printf "%b" "missing\t\t"
+>     (( exit_code++ ))
+>   elif [ -n "$(ls -lLd $dir | grep '^d.......w. ')" ]; then
+>     printf "%b" "world writable\t"
+>     (( exit_code++ ))
+>   else
+>     printf "%b" "ok\t\t"
+>   fi
+>   printf "%b" "$dir\n"
+> done
+>
+> exit $exit_code
+> ```
+>
+> ## SECURE TEMPORARY DIRECTORY
+> ```bash
+> # cookbook filename: make_temp
+>
+> # Make sure $TMP is set to something
+> [ -n "$TMP" ] || TMP='/tmp'
+> # Make a "good enough" random temp directory
+> until [ -n "$temp_dir" -a ! -d "$temp_dir" ]; do
+>   temp_dir="/$TMP/meaningful_prefix.${RANDOM}${RANDOM}${RANDOM}"
+> done
+>
+> mkdir -p -m 0700 $temp_dir
+>   || { echo "FATAL: Failed to create temp dir '$temp_dir': $?"; exit 100 }
+>
+> # Make a "good enough" random temp file
+> until [ -n "$temp_file" -a ! -e "$temp_file" ]; do
+>   temp_file="/$TMP/meaningful_prefix.${RANDOM}${RANDOM}${RANDOM}"
+> done
+>
+> touch $temp_file && chmod 0600 $temp_file
+>   || { echo "FATAL: Failed to create temp file '$temp_file': $?"; exit 101 }
+> ```
+>
+> ## CLEANUP
+> ```bash
+> # cookbook filename: clean_temp
+> # Do our best to clean up temp files no matter what
+> # Note $temp_dir must be set before this, and must not change!
+> cleanup="rm -rf $temp_dir"
+> trap "$cleanup" ABRT EXIT HUP INT QUIT
+> ```
+
+> [!CAUTION]
+> ## SETUID and SETGID
+> * Avoid using for shell scripts as may create more problems
+>
+> ## RESTRICT GUEST USERS
+> * There are mant users in the others catetory, they must be restricted
