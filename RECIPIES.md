@@ -283,6 +283,7 @@ ls -l "$1" | { read PERMS LCOUNT OWNER GROUP SIZE CRDATE CRTIME FILE ;
 > read -a MYRAY
 > ```
 
+> [!IMPORTANT]
 > ## SECURE SCRIPT TEMPLATE
 > ```bash
 > #!/usr/bin/env bash
