@@ -447,3 +447,33 @@ ls -l "$1" | { read PERMS LCOUNT OWNER GROUP SIZE CRDATE CRTIME FILE ;
 > [!TIP]
 > ## BASH LOADABLE BUILTINS
 > * Having code that is loadable into bash
+
+> [!TIP]
+> ## BASH INIT FILES
+> - `/etc/profile`
+> - `/etc/bashrc` (Red Hat) or `/etc/bash.bashrc` (Debian)
+> - `/etc/bash_completion`
+> - `/etc/profile.d/bash_completion.sh` and `/etc/bash_completion.d`
+> - `/etc/inputrc`
+> - `~/.bashrc`
+> - `~/.bash_profile`
+> - `~/.bash_login`
+> - `~/.profile`
+> - `~/.bash_history`
+> - `~/.bash_logout`
+> - `~/.inputrc`
+
+> [!TIP]
+> ## SHARING SINGLE SESSION
+> * Sometimes it is important for training and troubleshooting purposes to share a single session
+> * Use `TMUX`
+> ## LOGGING ENTIRE SESSION
+> * Do it
+> ## PREPEND LINE TO FILE
+> * Do it
+
+> [!TIP]
+> ## USE SUDO ON GROUP OF COMMANDS
+```bash
+sudo bash -c 'COMPLEX_COMMAND_CHAIN'
+```
